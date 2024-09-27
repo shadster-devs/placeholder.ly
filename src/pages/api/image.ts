@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import sharp from 'sharp'
+import * as fs from "fs";
+import path from "path";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { w, h, t, bg, c, fm } = req.query
@@ -15,14 +17,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const textColor = `#${(c as string) || '333333'}`
     const format = (fm as string) || 'png'
 
+    const fontPath = path.join(process.cwd(), 'public/fonts/Roboto-Regular.ttf');
+    const fontData = fs.readFileSync(fontPath).toString('base64');
+
     try {
         const svg = `
       <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        @font-face {
+          font-family: 'Roboto';
+          src: url('data:font/ttf;base64,${fontData}') format('ttf');
+          font-weight: normal;
+          font-style: normal;
+        }
+        text {
+          font-family: 'Roboto', sans-serif;
+          fill: ${textColor};
+          font-size: 20px;
+        }
+      </style>
         <rect width="100%" height="100%" fill="${bgColor}"/>
         <text 
           x="50%" 
           y="50%" 
-          font-family="Times New Roman, sans-serif" 
           font-size="${Math.min(width, height) / 5}px" 
           fill="${textColor}" 
           text-anchor="middle" 
