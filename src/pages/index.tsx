@@ -5,22 +5,6 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ClipboardCopy } from 'lucide-react'
 
-const fontOptions = [
-    "Arial",
-    "Helvetica",
-    "Times New Roman",
-    "Courier",
-    "Verdana",
-    "Georgia",
-    "Palatino",
-    "Garamond",
-    "Bookman",
-    "Comic Sans MS",
-    "Trebuchet MS",
-    "Arial Black",
-    "Impact"
-]
-
 const formatOptions = ["png", "jpeg", "webp"]
 
 export default function Home() {
@@ -29,7 +13,6 @@ export default function Home() {
     const [text, setText] = useState('300x150')
     const [bgColor, setBgColor] = useState('#cccccc')
     const [textColor, setTextColor] = useState('#333333')
-    const [font, setFont] = useState('Arial')
     const [format, setFormat] = useState('png')
     const [url, setUrl] = useState('')
 
@@ -41,12 +24,11 @@ export default function Home() {
             t: text,
             bg: bgColor.replace('#', ''),
             c: textColor.replace('#', ''),
-            f: font,
             fm: format
         })
         const imageUrl = `${baseUrl}/api/image?${params.toString()}`
         setUrl(imageUrl)
-    }, [width, height, text, bgColor, textColor, font, format])
+    }, [width, height, text, bgColor, textColor, format])
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(url)
@@ -74,14 +56,6 @@ export default function Home() {
                         onChange={(e) => setHeight(Number(e.target.value))}
                     />
                 </div>
-            </div>
-            <div>
-                <Label htmlFor="text">Text</Label>
-                <Input
-                    id="text"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -123,25 +97,18 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <Label htmlFor="font">Font</Label>
-                    <Select value={font} onValueChange={setFont}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select font" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {fontOptions.map((f) => (
-                                <SelectItem key={f} value={f}>
-                                    {f}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    <Label htmlFor="text">Text</Label>
+                    <Input
+                        id="text"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    />
                 </div>
                 <div>
                     <Label htmlFor="format">Format</Label>
                     <Select value={format} onValueChange={setFormat}>
                         <SelectTrigger>
-                            <SelectValue placeholder="Select format" />
+                            <SelectValue placeholder="Select format"/>
                         </SelectTrigger>
                         <SelectContent>
                             {formatOptions.map((f) => (

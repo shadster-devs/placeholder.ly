@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import sharp from 'sharp'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const { w, h, t, bg, c, f, fm } = req.query
+    const { w, h, t, bg, c, fm } = req.query
 
     if (!w || !h) {
         return res.status(400).json({ error: 'Width and height are required' })
@@ -13,7 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const text = (t as string) || `${width}x${height}`
     const bgColor = `#${(bg as string) || 'cccccc'}`
     const textColor = `#${(c as string) || '333333'}`
-    const font = (f as string) || 'Arial'
     const format = (fm as string) || 'png'
 
     try {
@@ -23,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         <text 
           x="50%" 
           y="50%" 
-          font-family="${font}, sans-serif" 
+          font-family="Times New Roman, sans-serif" 
           font-size="${Math.min(width, height) / 5}px" 
           fill="${textColor}" 
           text-anchor="middle" 
