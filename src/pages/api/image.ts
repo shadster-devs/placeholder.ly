@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         <text
           x="50%"
           y="50%"
-          font-family="'Roboto'"
+          font-family="'Arial', sans-serif"
           font-size="${Math.min(width, height) / 5}px"
           fill="${textColor}"
           text-anchor="middle"
